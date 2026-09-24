@@ -1,0 +1,17 @@
+{
+  "name": "gocarto",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-powered quick-commerce grocery delivery platform",
+  "packageManager": "npm@11.19.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "echo \"GoCarto development environment\"",
+    "build": "echo \"GoCarto build\"",
+    "test": "echo \"GoCarto tests\"",
+    "lint": "echo \"GoCarto lint\""
+  }
+}
