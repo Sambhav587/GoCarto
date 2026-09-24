@@ -13,5 +13,8 @@
     "build": "echo \"GoCarto build\"",
     "test": "echo \"GoCarto tests\"",
     "lint": "echo \"GoCarto lint\""
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
   }
 }
