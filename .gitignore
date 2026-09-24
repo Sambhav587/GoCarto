@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+out/
+
+# Next.js
+.next/
+
+# Expo / React Native
+.expo/
+.expo-shared/
+web-build/
+
+# React Native native build files
+android/.gradle/
+android/app/build/
+android/build/
+ios/Pods/
+ios/build/
+
+# Test / coverage output
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / editor files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# Temporary files
+*.tmp
+*.temp
+
+# Terraform / Infrastructure state
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Local certificates / keys
+*.pem
+*.key
+*.crt
+
+# Local uploads / generated files
+uploads/
