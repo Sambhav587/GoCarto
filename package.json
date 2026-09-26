@@ -1,5 +1,6 @@
 {
   "name": "gocarto",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
   "description": "AI-powered quick-commerce grocery delivery platform",
@@ -12,9 +13,19 @@
     "dev": "echo \"GoCarto development environment\"",
     "build": "echo \"GoCarto build\"",
     "test": "echo \"GoCarto tests\"",
-    "lint": "echo \"GoCarto lint\""
+    "lint": "echo \"GoCarto lint\"",
+    "postinstall": "prisma skills sync || exit 0",
+    "contract:emit": "prisma contract emit"
   },
   "devDependencies": {
-    "typescript": "^7.0.2"
+    "@prisma/cli-engine": "^0.6.1",
+    "@types/node": "^26.6.2",
+    "prisma": "^8.0.0-rc.17",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.10.0",
+    "@prisma/orm-postgres": "^8.0.0-rc.12",
+    "dotenv": "^18.0.4"
   }
 }
