@@ -1,6 +1,6 @@
 #!/usr/bin/env -S node
-import type { Contract as End } from '../../snapshots/91e7f9f035806fa2789a4d726ef7724cad434fd6b00014d47ebf12d6e6bb784e/contract';
-import endContract from '../../snapshots/91e7f9f035806fa2789a4d726ef7724cad434fd6b00014d47ebf12d6e6bb784e/contract.json' with { type: 'json' };
+import type { Contract as End } from '../../snapshots/c17ad1a076d5260ddc486b64f2c08a1cf6ecaf9c4eca80f63883d02d323b84d6/contract';
+import endContract from '../../snapshots/c17ad1a076d5260ddc486b64f2c08a1cf6ecaf9c4eca80f63883d02d323b84d6/contract.json' with { type: 'json' };
 import { Migration, MigrationCLI, col, fn, primaryKey } from '@prisma/orm-postgres/migration';
 
 export default class M extends Migration<never, End> {
@@ -18,16 +18,16 @@ export default class M extends Migration<never, End> {
           col('createdAt', 'timestamptz', {
             notNull: true,
             default: fn('now()'),
-            codecRef: { codecId: 'pg/timestamptz-string@1' },
+            codecRef: { codecId: 'pg/timestamptz-temporal@1' },
           }),
           col('id', 'SERIAL', { notNull: true, codecRef: { codecId: 'pg/int4@1' } }),
           col('title', 'text', { notNull: true, codecRef: { codecId: 'pg/text@1' } }),
           col('updatedAt', 'timestamptz', {
             notNull: true,
-            codecRef: { codecId: 'pg/timestamptz-string@1' },
+            codecRef: { codecId: 'pg/timestamptz-temporal@1' },
           }),
         ],
-        constraints: [primaryKey(['id'])],
+        constraints: [primaryKey(['id'], { name: 'Post_pkey' })],
       }),
       this.createTable({
         schema: 'public',
@@ -36,18 +36,18 @@ export default class M extends Migration<never, End> {
           col('createdAt', 'timestamptz', {
             notNull: true,
             default: fn('now()'),
-            codecRef: { codecId: 'pg/timestamptz-string@1' },
+            codecRef: { codecId: 'pg/timestamptz-temporal@1' },
           }),
           col('email', 'text', { notNull: true, codecRef: { codecId: 'pg/text@1' } }),
           col('id', 'SERIAL', { notNull: true, codecRef: { codecId: 'pg/int4@1' } }),
           col('name', 'text', { codecRef: { codecId: 'pg/text@1' } }),
           col('updatedAt', 'timestamptz', {
             notNull: true,
-            codecRef: { codecId: 'pg/timestamptz-string@1' },
+            codecRef: { codecId: 'pg/timestamptz-temporal@1' },
           }),
           col('username', 'text', { codecRef: { codecId: 'pg/text@1' } }),
         ],
-        constraints: [primaryKey(['id'])],
+        constraints: [primaryKey(['id'], { name: 'User_pkey' })],
       }),
       this.addUnique({
         schema: 'public',
