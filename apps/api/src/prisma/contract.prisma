@@ -1,0 +1,115 @@
+// use prisma-8
+// Contract inferred from the live database schema. Edit as needed, then run `prisma contract emit`.
+
+model User {
+  id           Int         @id(map: "User_pkey") @default(autoincrement())
+  createdAt    Timestamptz @default(now())
+  email        String      @unique(map: "User_email_key")
+  name         String?
+  updatedAt    Timestamptz
+  username     String?
+  passwordHash String?
+  role         String      @default("customer")
+  posts        Post[]
+  cart         Cart?
+  orders       Order[]
+}
+
+model Post {
+  id        Int         @id(map: "Post_pkey") @default(autoincrement())
+  authorId  Int
+  content   String?
+  createdAt Timestamptz @default(now())
+  title     String
+  updatedAt Timestamptz
+  author    User        @relation(fields: [authorId], references: [id], map: "Post_authorId_fkey")
+
+  @@index([authorId], name: "Post_authorId_idx")
+}
+
+model Category {
+  id        Int         @id(map: "Category_pkey") @default(autoincrement())
+  name      String      @unique(map: "Category_name_key")
+  slug      String      @unique(map: "Category_slug_key")
+  createdAt Timestamptz @default(now())
+  updatedAt Timestamptz
+  products  Product[]
+}
+
+model Product {
+  id            Int         @id(map: "Product_pkey") @default(autoincrement())
+  categoryId    Int
+  name          String
+  slug          String      @unique(map: "Product_slug_key")
+  description   String?
+  price         Int
+  unit          String
+  isActive      Boolean     @default(true)
+  stockQuantity Int         @default(0)
+  createdAt     Timestamptz @default(now())
+  updatedAt     Timestamptz
+  category      Category    @relation(fields: [categoryId], references: [id], map: "Product_categoryId_fkey")
+  cartItems     CartItem[]
+  orderItems    OrderItem[]
+
+  @@index([categoryId], name: "Product_categoryId_idx")
+  @@index([isActive], name: "Product_isActive_idx")
+}
+
+model Cart {
+  id        Int        @id(map: "Cart_pkey") @default(autoincrement())
+  userId    Int        @unique(map: "Cart_userId_key")
+  createdAt Timestamptz @default(now())
+  updatedAt Timestamptz
+  user      User       @relation(fields: [userId], references: [id], map: "Cart_userId_fkey")
+  items     CartItem[]
+}
+
+model CartItem {
+  id        Int       @id(map: "CartItem_pkey") @default(autoincrement())
+  cartId    Int
+  productId Int
+  quantity  Int
+  createdAt Timestamptz @default(now())
+  updatedAt Timestamptz
+  cart      Cart      @relation(fields: [cartId], references: [id], map: "CartItem_cartId_fkey")
+  product   Product   @relation(fields: [productId], references: [id], map: "CartItem_productId_fkey")
+
+  @@unique([cartId, productId], map: "CartItem_cartId_productId_key")
+  @@index([cartId], name: "CartItem_cartId_idx")
+  @@index([productId], name: "CartItem_productId_idx")
+}
+
+model Order {
+  id              Int         @id(map: "Order_pkey") @default(autoincrement())
+  userId          Int
+  status          String      @default("pending")
+  paymentStatus   String      @default("pending")
+  paymentMethod   String?
+  deliveryAddress String
+  subtotal        Int
+  deliveryFee     Int         @default(0)
+  total           Int
+  createdAt       Timestamptz @default(now())
+  updatedAt       Timestamptz
+  user            User        @relation(fields: [userId], references: [id], map: "Order_userId_fkey")
+  items           OrderItem[]
+
+  @@index([userId], name: "Order_userId_idx")
+  @@index([status], name: "Order_status_idx")
+  @@index([createdAt], name: "Order_createdAt_idx")
+}
+
+model OrderItem {
+  id        Int       @id(map: "OrderItem_pkey") @default(autoincrement())
+  orderId  Int
+  productId Int
+  quantity  Int
+  unitPrice Int
+  createdAt Timestamptz @default(now())
+  order     Order     @relation(fields: [orderId], references: [id], map: "OrderItem_orderId_fkey")
+  product   Product   @relation(fields: [productId], references: [id], map: "OrderItem_productId_fkey")
+
+  @@index([orderId], name: "OrderItem_orderId_idx")
+  @@index([productId], name: "OrderItem_productId_idx")
+}

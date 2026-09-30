@@ -64,3 +64,9 @@ desktop.ini
 # Local uploads / generated files
 uploads/
 *.tsbuildinfo
+
+# Local AI agent / generated skill directories
+.agents/
+.claude/
+.cursor/
+.devin/
