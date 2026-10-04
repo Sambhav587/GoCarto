@@ -1,0 +1,86 @@
+[
+  {
+    "id": "column.public.Order.latitude",
+    "label": "Add column \"latitude\" to \"Order\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "latitude",
+        "table": "Order"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"latitude\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Order",
+          "latitude"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"latitude\"",
+        "sql": "ALTER TABLE \"public\".\"Order\" ADD COLUMN \"latitude\" float8"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"latitude\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Order",
+          "latitude"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.Order.longitude",
+    "label": "Add column \"longitude\" to \"Order\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "longitude",
+        "table": "Order"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"longitude\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Order",
+          "longitude"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"longitude\"",
+        "sql": "ALTER TABLE \"public\".\"Order\" ADD COLUMN \"longitude\" float8"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"longitude\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Order",
+          "longitude"
+        ]
+      }
+    ]
+  }
+]

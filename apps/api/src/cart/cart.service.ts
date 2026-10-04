@@ -12,7 +12,9 @@ import { UpdateCartItemDto } from '../dto/update-cart-item.dto.js';
 @Injectable()
 export class CartService {
   async getCart(userId: number) {
-    const cart = await db.orm.public.Cart.first({ userId });
+    const cart = await db.orm.public.Cart.first({
+      userId,
+    });
 
     if (!cart) {
       return {
@@ -22,9 +24,12 @@ export class CartService {
       };
     }
 
-    const items = await db.orm.public.CartItem.where({
-      cartId: cart.id,
-    }).all();
+    const items = await db.orm.public.CartItem
+      .where({
+        cartId: cart.id,
+      })
+      .include('product')
+      .all();
 
     return {
       ...cart,
@@ -32,7 +37,10 @@ export class CartService {
     };
   }
 
-  async addItem(userId: number, data: AddCartItemDto) {
+  async addItem(
+    userId: number,
+    data: AddCartItemDto,
+  ) {
     const product = await db.orm.public.Product.first({
       id: data.productId,
     });
@@ -49,7 +57,9 @@ export class CartService {
       );
     }
 
-    let cart = await db.orm.public.Cart.first({ userId });
+    let cart = await db.orm.public.Cart.first({
+      userId,
+    });
 
     if (!cart) {
       cart = await db.orm.public.Cart.create({
@@ -58,26 +68,32 @@ export class CartService {
       });
     }
 
-    const existingItem = await db.orm.public.CartItem.first({
-      cartId: cart.id,
-      productId: data.productId,
-    });
+    const existingItem =
+      await db.orm.public.CartItem.first({
+        cartId: cart.id,
+        productId: data.productId,
+      });
 
     if (existingItem) {
-      return await db.orm.public.CartItem.where({
-        id: existingItem.id,
-      }).update({
-        quantity: existingItem.quantity + data.quantity,
+      await db.orm.public.CartItem
+        .where({
+          id: existingItem.id,
+        })
+        .update({
+          quantity:
+            existingItem.quantity + data.quantity,
+          updatedAt: Temporal.Now.instant(),
+        });
+    } else {
+      await db.orm.public.CartItem.create({
+        cartId: cart.id,
+        productId: data.productId,
+        quantity: data.quantity,
         updatedAt: Temporal.Now.instant(),
       });
     }
 
-    return await db.orm.public.CartItem.create({
-      cartId: cart.id,
-      productId: data.productId,
-      quantity: data.quantity,
-      updatedAt: Temporal.Now.instant(),
-    });
+    return await this.getCart(userId);
   }
 
   async updateItem(
@@ -85,7 +101,9 @@ export class CartService {
     productId: number,
     data: UpdateCartItemDto,
   ) {
-    const cart = await db.orm.public.Cart.first({ userId });
+    const cart = await db.orm.public.Cart.first({
+      userId,
+    });
 
     if (!cart) {
       throw new NotFoundException('Cart not found');
@@ -102,16 +120,25 @@ export class CartService {
       );
     }
 
-    return await db.orm.public.CartItem.where({
-      id: item.id,
-    }).update({
-      quantity: data.quantity,
-      updatedAt: Temporal.Now.instant(),
-    });
+    await db.orm.public.CartItem
+      .where({
+        id: item.id,
+      })
+      .update({
+        quantity: data.quantity,
+        updatedAt: Temporal.Now.instant(),
+      });
+
+    return await this.getCart(userId);
   }
 
-  async removeItem(userId: number, productId: number) {
-    const cart = await db.orm.public.Cart.first({ userId });
+  async removeItem(
+    userId: number,
+    productId: number,
+  ) {
+    const cart = await db.orm.public.Cart.first({
+      userId,
+    });
 
     if (!cart) {
       throw new NotFoundException('Cart not found');
@@ -128,8 +155,12 @@ export class CartService {
       );
     }
 
-    return await db.orm.public.CartItem.where({
-      id: item.id,
-    }).delete();
+    await db.orm.public.CartItem
+      .where({
+        id: item.id,
+      })
+      .delete();
+
+    return await this.getCart(userId);
   }
 }

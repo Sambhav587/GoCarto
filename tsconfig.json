@@ -10,5 +10,10 @@
     "esModuleInterop": true,
     "outDir": "dist"
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/api"
+    }
+  ]
 }

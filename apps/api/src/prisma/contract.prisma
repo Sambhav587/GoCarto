@@ -87,6 +87,8 @@ model Order {
   paymentStatus   String      @default("pending")
   paymentMethod   String?
   deliveryAddress String
+  latitude        Float?
+  longitude       Float?
   subtotal        Int
   deliveryFee     Int         @default(0)
   total           Int

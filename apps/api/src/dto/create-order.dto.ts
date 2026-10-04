@@ -1,5 +1,7 @@
 import {
   IsIn,
+  IsLatitude,
+  IsLongitude,
   IsOptional,
   IsString,
   MinLength,
@@ -9,6 +11,14 @@ export class CreateOrderDto {
   @IsString()
   @MinLength(10)
   deliveryAddress: string;
+
+  @IsOptional()
+  @IsLatitude()
+  latitude?: number;
+
+  @IsOptional()
+  @IsLongitude()
+  longitude?: number;
 
   @IsOptional()
   @IsString()

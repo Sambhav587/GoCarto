@@ -85,6 +85,8 @@ export class OrderService {
         paymentStatus: 'pending',
         paymentMethod: data.paymentMethod ?? 'cod',
         deliveryAddress: data.deliveryAddress,
+        latitude: data.latitude ?? null,
+        longitude: data.longitude ?? null,
         subtotal,
         deliveryFee,
         total,
@@ -157,6 +159,27 @@ export class OrderService {
     return results;
   }
 
+  async getAllOrders() {
+    const orders =
+      await db.orm.public.Order.all();
+
+    const results = [];
+
+    for (const order of orders) {
+      const items =
+        await db.orm.public.OrderItem.where({
+          orderId: order.id,
+        }).all();
+
+      results.push({
+        ...order,
+        items,
+      });
+    }
+
+   return results;
+}
+
   async getOrderById(userId: number, orderId: number) {
     const user = await db.orm.public.User.first({ id: userId });
 
@@ -207,7 +230,7 @@ export class OrderService {
   }
 
   const allowedTransitions: Record<string, string[]> = {
-    pending: ['confirmed', 'cancelled'],
+    pending: ['confirmed', 'preparing', 'cancelled'],
     confirmed: ['preparing', 'cancelled'],
     preparing: ['out_for_delivery', 'cancelled'],
     out_for_delivery: ['delivered'],

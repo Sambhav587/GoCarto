@@ -335,6 +335,20 @@
                   "kind": "scalar"
                 }
               },
+              "latitude": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float8@1",
+                  "kind": "scalar"
+                }
+              },
+              "longitude": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float8@1",
+                  "kind": "scalar"
+                }
+              },
               "paymentMethod": {
                 "nullable": true,
                 "type": {
@@ -431,6 +445,12 @@
                 },
                 "id": {
                   "column": "id"
+                },
+                "latitude": {
+                  "column": "latitude"
+                },
+                "longitude": {
+                  "column": "longitude"
                 },
                 "paymentMethod": {
                   "column": "paymentMethod"
@@ -1235,6 +1255,16 @@
                   "nativeType": "int4",
                   "nullable": false
                 },
+                "latitude": {
+                  "codecId": "pg/float8@1",
+                  "nativeType": "float8",
+                  "nullable": true
+                },
+                "longitude": {
+                  "codecId": "pg/float8@1",
+                  "nativeType": "float8",
+                  "nullable": true
+                },
                 "paymentMethod": {
                   "codecId": "pg/text@1",
                   "nativeType": "text",
@@ -1717,7 +1747,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "f36e8fc3d6022c2947beda86743243cdb98d01d782d7f1a5b82b17337eec9325"
+    "storageHash": "e39e1d7f1a6e3740fd3cedf4dea6e33606e2fd6dd84866dc1f1aac0d56d9f2b7"
   },
   "capabilities": {
     "postgres": {
