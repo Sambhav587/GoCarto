@@ -129,7 +129,7 @@ GoCarto/
 │   ├── customer/            # Expo / React Native app
 │   └── admin/               # React / Vite admin dashboard
 │
-├── migrations/              # Database migrations
+apps/api/migrations/app/              # Database migrations
 ├── package.json             # Monorepo configuration
 ├── package-lock.json
 └── README.md
@@ -349,7 +349,7 @@ npm install
 
 ### Environment Configuration
 
-Configure the required environment variables for the local environment.
+Configure the required environment variables for the API and customer app using local .env files.
 
 Never commit real credentials or API keys.
 
