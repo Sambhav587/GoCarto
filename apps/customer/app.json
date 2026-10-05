@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "customer",
-    "slug": "customer",
+    "slug": "gocarto-customer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,7 +19,14 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "output": "single"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "60dea190-d04f-4bf4-af86-de247ada8a54"
+      }
+    },
+    "owner": "gocarto"
   }
 }
