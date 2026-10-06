@@ -12,6 +12,14 @@
 
 > A full-stack quick-commerce grocery platform combining a customer shopping experience, admin operations dashboard, secure backend APIs, real order workflows, and an AI-powered shopping assistant.
 
+### 🌐 Live Demo
+
+| Application | Link |
+|---|---|
+| 🛒 Customer App | https://gocarto-customer.expo.app |
+| 🧑‍💼 Admin Dashboard | https://gocarto-admin.onrender.com |
+| ⚙️ Backend API | https://gocarto.onrender.com |
+
 ---
 
 ## ✨ Overview
@@ -22,7 +30,7 @@ It covers the complete grocery ordering journey:
 
 **Discover products → Build cart → Choose delivery location → Checkout → Place order → Manage orders**
 
-The project focuses on real-world application workflows, backend business logic, authentication, authorization, testing, and AI-assisted shopping rather than a basic CRUD implementation.
+The project focuses on real-world application workflows, backend business logic, authentication, authorization, testing, security, deployment, and AI-assisted shopping rather than a basic CRUD implementation.
 
 ---
 
@@ -50,10 +58,12 @@ The project focuses on real-world application workflows, backend business logic,
 - Order history
 - Order status tracking
 - Controlled order status transitions
+- Order cancellation flows
 
 ### 🧑‍💼 Admin Operations
 
 - Admin authentication
+- Admin dashboard
 - Order overview
 - Pending order counts
 - Order totals
@@ -104,6 +114,7 @@ The backend enforces supported order status transitions and cancellation flows.
 ```mermaid
 flowchart TD
     A[Customer App<br/>Expo / React Native] -->|REST API| B[NestJS API]
+    J[Admin Dashboard<br/>React + Vite + TypeScript] -->|REST API| B
 
     B --> C[Authentication]
     B --> D[Products]
@@ -113,9 +124,9 @@ flowchart TD
     B --> H[Health]
 
     B -->|Prisma ORM| I[(PostgreSQL)]
-
-    J[Admin Dashboard<br/>React + Vite + TypeScript] -->|REST API| B
 ```
+
+The architecture separates customer-facing shopping, operational administration, backend business logic, and persistent data storage behind a controlled API layer.
 
 ---
 
@@ -126,10 +137,10 @@ GoCarto/
 │
 ├── apps/
 │   ├── api/                 # NestJS backend API
-│   ├── customer/            # Expo / React Native app
+│   ├── customer/            # Expo / React Native customer app
 │   └── admin/               # React / Vite admin dashboard
 │
-apps/api/migrations/app/              # Database migrations
+├── apps/api/migrations/app/ # Database migrations
 ├── package.json             # Monorepo configuration
 ├── package-lock.json
 └── README.md
@@ -223,14 +234,15 @@ Supported application-level capabilities include:
 
 The assistant does not receive unrestricted database access. Supported actions are handled through backend application logic.
 
-Future AI capabilities can include:
+### Future AI Capabilities
 
-- Tool/function calling
+- Advanced tool/function calling
 - Retrieval-augmented generation
 - Product knowledge retrieval
 - FAQ and policy assistance
 - Order-aware customer support
 - Personalized shopping assistance
+- AI-powered shopping lists
 
 ---
 
@@ -280,6 +292,34 @@ The admin dashboard separates customer-facing shopping functionality from operat
 
 ---
 
+## ☁️ Deployment
+
+GoCarto is deployed as a production-style full-stack application:
+
+- **Backend API:** Render
+- **PostgreSQL Database:** Neon
+- **Customer Web App:** Expo
+- **Admin Dashboard:** Render Static Site
+
+Production environments use environment-based configuration and keep credentials outside version control.
+
+### Production Validation
+
+The deployed application has been manually verified across the complete order workflow:
+
+- Customer authentication
+- Product browsing
+- Cart management
+- Checkout
+- Order creation
+- Order persistence
+- Admin order visibility
+- Admin order status updates
+- Customer-side order status updates
+- Customer → API → Database → Admin → API → Customer flow
+
+---
+
 ## 🚧 Roadmap
 
 ### Commerce
@@ -302,10 +342,9 @@ The admin dashboard separates customer-facing shopping functionality from operat
 - Redis caching
 - Background job processing
 - Push notifications
-- Cloud deployment
-- CI/CD pipelines
+- CI/CD improvements
 - Autoscaling
-- Production secrets management
+- Advanced production infrastructure
 
 ### AI
 
@@ -321,7 +360,8 @@ The admin dashboard separates customer-facing shopping functionality from operat
 - Advanced monitoring
 - Centralized observability
 - Fraud and abuse protection
-- Production security hardening
+- Further production security hardening
+- Secrets rotation and managed secret storage
 
 ---
 
@@ -349,7 +389,7 @@ npm install
 
 ### Environment Configuration
 
-Configure the required environment variables for the API and customer app using local .env files.
+Configure the required environment variables for the API and customer app using local `.env` files.
 
 Never commit real credentials or API keys.
 
@@ -382,7 +422,9 @@ npm run dev
 
 Full-stack developer building GoCarto as an AI-powered quick-commerce engineering project.
 
-[GitHub](https://github.com/Sambhav587)
+### GitHub
+
+https://github.com/Sambhav587/GoCarto
 
 ---
 
