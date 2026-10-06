@@ -28,6 +28,7 @@ async function bootstrap() {
   app.enableCors({
   origin: [
     env.corsOrigin,
+    'https://gocarto-admin.onrender.com',
     'http://localhost:5173',
     'http://localhost:8081',
     'http://localhost:8082',
