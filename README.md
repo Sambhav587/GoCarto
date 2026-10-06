@@ -22,6 +22,30 @@
 
 ---
 
+## 📸 Project Screenshots
+
+### 🏠 Customer App
+
+![GoCarto Home](./Home_GoCarto.png)
+
+### 🛒 Grocery Browsing
+
+![GoCarto Grocery Browsing](./Groceries_GoCarto.png)
+
+### 🤖 AI Shopping Assistant
+
+![GoCarto AI](./AI_GoCarto.png)
+
+### 🧑‍💼 Admin Dashboard
+
+![GoCarto Admin](./Admin_GoCarto.png)
+
+### 🛍️ Cart & Checkout
+
+![GoCarto Cart](./Cartpage_GoCarto.png)
+
+ ---
+
 ## ✨ Overview
 
 GoCarto is an AI-powered quick-commerce grocery platform built as a full-stack engineering project.
